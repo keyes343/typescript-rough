@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
-import * as t from './types';
+import * as t from '../types';
 
 export const useStyles = makeStyles({
     root: {

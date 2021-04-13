@@ -2,10 +2,10 @@
 import React, { Dispatch } from 'react';
 // import { Homepage } from './Desktop/index';
 // import { t, e } from '../Types';
-import * as t from './types';
+import * as t from '../types';
 import * as f from './functions';
 
-import Main from './Main';
+import Main from '../Main';
 
 export interface ContextProps {}
 
@@ -67,6 +67,12 @@ export const c2dispatch = React.createContext<Dispatch<{
 const Context: React.FC<ContextProps> = () => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
+    React.useEffect(() => {
+        // const {Ratings,"Discount Level":discount,Categories,"Sub Categories":subCategories,Level} = state;
+        console.log({
+            state,
+        });
+    }, [state]);
     return (
         <c2state.Provider value={{ ...state }}>
             <c2dispatch.Provider value={dispatch}>

@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Box, Grid, Typography, Radio } from '@material-ui/core';
-import { useStyles } from './hooks';
+import { useStyles } from './Helpers/hooks';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import * as t from './types';
-import * as f from './functions';
-import * as vars from './constants';
-import { UseState, UseDispatch } from './state';
-import CouponCard from './Main/CouponCard';
+import { UseState, UseDispatch, vars, t, f } from './index';
+
+// import CouponCard from './Main/CouponCard';
+import CouponLogic from './Main/CouponLogic';
 
 type type_radio =
     | t.discountLevels
@@ -62,13 +61,13 @@ const Main: React.FC<MainProps> = () => {
                         style={{ gap: '0.7rem' }}
                         // spacing={4}
                     >
-                        {vars.rootBtns.map((name: t.rootBtn, i) => {
+                        {vars.rootBtns.map((mainOption: t.rootBtn, i) => {
                             return (
                                 // mapped item inside left column
                                 <Grid
                                     onMouseEnter={(e) => {
                                         e.stopPropagation();
-                                        setHoveredUpon(name);
+                                        setHoveredUpon(mainOption);
                                     }}
                                     container
                                     item
@@ -86,12 +85,12 @@ const Main: React.FC<MainProps> = () => {
                                         <Typography
                                             variant="h5"
                                             color={
-                                                name === hoveredUpon
+                                                mainOption === hoveredUpon
                                                     ? 'secondary'
                                                     : 'primary'
                                             }
                                         >
-                                            {name}
+                                            {mainOption}
                                         </Typography>
                                     </Grid>
                                     <Grid
@@ -116,11 +115,11 @@ const Main: React.FC<MainProps> = () => {
                                             // padding: '0.2rem',
                                             width: '100%',
                                             maxHeight:
-                                                hoveredUpon === name
+                                                hoveredUpon === mainOption
                                                     ? '40rem'
                                                     : '0',
                                             overflow:
-                                                name === hoveredUpon
+                                                mainOption === hoveredUpon
                                                     ? 'auto'
                                                     : 'hidden',
                                             transition: 'all 0.5s',
@@ -135,27 +134,44 @@ const Main: React.FC<MainProps> = () => {
                                                 // border: '2px solid blue',
                                             }}
                                         >
-                                            {grab_subOptions(name).map(
-                                                (sub_option) => {
+                                            {/* depending upon the "mainOption" grab the array of subOptions "vars".
+                                            Then map over that arry, to display the subOptions when user hovers/clicks on any of the main options */}
+                                            {grab_subOptions(mainOption).map(
+                                                (subOption, j) => {
                                                     return (
                                                         <Box
+                                                            key={`${i}+${j}`}
                                                             style={{
-                                                                // border:
-                                                                //     '2px solid red',
+                                                                border:
+                                                                    '2px solid red',
                                                                 display: 'flex',
                                                                 flexDirection:
                                                                     'row',
-                                                                cursor:
-                                                                    'default',
+                                                            }}
+                                                            // clicking this div should tell the state which button has been clicked by user and how to toggle it
+                                                            onClick={() => {
+                                                                console.log({
+                                                                    subOption,
+                                                                    mainOption,
+                                                                });
+                                                                const toggleThisRadio: t.toggleRadios = {
+                                                                    btn: mainOption,
+                                                                    elem: subOption,
+                                                                };
+                                                                dispatch({
+                                                                    type:
+                                                                        'rootBtn',
+                                                                    payload: toggleThisRadio,
+                                                                });
                                                             }}
                                                         >
-                                                            <Box
-                                                            // style={{
-                                                            //     border:
-                                                            //         '2px solid blue',
-                                                            // }}
-                                                            >
-                                                                <Radio />
+                                                            <Box>
+                                                                <Radio
+                                                                    checked={f.exists_in_state_value(
+                                                                        mainOption,
+                                                                        subOption
+                                                                    )}
+                                                                />
                                                             </Box>
                                                             <Box
                                                                 style={{
@@ -163,9 +179,11 @@ const Main: React.FC<MainProps> = () => {
                                                                     //     '2px solid blue',
                                                                     alignSelf:
                                                                         'center',
+                                                                    cursor:
+                                                                        'pointer',
                                                                 }}
                                                             >
-                                                                {sub_option}
+                                                                {subOption}
                                                             </Box>
                                                         </Box>
                                                     );
@@ -187,7 +205,7 @@ const Main: React.FC<MainProps> = () => {
                         padding: '2rem',
                     }}
                 >
-                    <CouponCard />
+                    <CouponLogic />
                 </Grid>
             </Grid>
         </Box>
@@ -196,7 +214,7 @@ const Main: React.FC<MainProps> = () => {
 
 export default Main;
 
-// {grab_subOptions(name)?.map(
+// {grab_subOptions(mainOption)?.map(
 //     (
 //         radio: type_radio,
 //         i: number
@@ -204,11 +222,11 @@ export default Main;
 //         let { rootBtns } = vars;
 //         if (
 //             state.hasOwnProperty(
-//                 name
+//                 mainOption
 //             )
 //         ) {
 //             return grab_subOptions(
-//                 name
+//                 mainOption
 //             ).map(
 //                 (subOption, i) => {
 //                     return (
@@ -225,10 +243,10 @@ export default Main;
 //                                         i
 //                                     }
 //                                     // checked={f.exists(
-//                                     //     state[name],
-//                                     //     name
+//                                     //     state[mainOption],
+//                                     //     mainOption
 //                                     // )}
-//                                     value="name"
+//                                     value="mainOption"
 //                                 />
 //                             </div>
 //                             <div
@@ -241,7 +259,7 @@ export default Main;
 //                             >
 //                                 <Typography variant="h6">
 //                                     {/* {grab_subOptions(
-//                                         name
+//                                         mainOption
 //                                     )} */}
 //                                 </Typography>
 //                             </div>

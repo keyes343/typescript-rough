@@ -1,4 +1,6 @@
-import * as t from './types';
+import * as t from '../types';
+import * as apis from './MoreConstants/apis';
+export { apis };
 
 export const rootBtns: t.rootBtn[] = [
     'Ratings',
