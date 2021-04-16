@@ -39,72 +39,62 @@ export const toggleArray = (
 };
 
 // mainly used by material-ui-radio to check if it should stay on or off.
-export const exists_in_state_value = (btn: t.rootBtn, elem: t.radios) => {
-    const state = UseState()!;
-    const dispatch = UseDispatch()!;
-
+export const exists_in_state_value = (
+    state: initialState_type,
+    btn: t.rootBtn,
+    elem: t.radios
+) => {
     const grab_radio_from_state: t.radios[] = state[btn];
 
     const indx = grab_radio_from_state.indexOf(elem);
     return indx > -1;
 };
 
-const elem_to_api: { [key in t.rootBtn]: (elem: t.radios) => void } = {
-    Ratings: (elem) => {
-        switch (elem as t.ratings) {
-            case 'All Ratings':
-                return null;
-            case '4.5 & above':
-                return 'rating=4.5';
-            case '4.0 & above':
-                return 'rating=4';
-            case '3.5 & above':
-                return 'rating=3.5';
-            case '3.0 & above':
-                return 'rating=3';
-            default:
-                return null;
-        }
-    },
-    'Discount Level': (elem) => {
-        switch (elem as t.discountLevels) {
-            case '>50%':
-                return 'discount=50';
-            case '100%':
-                return 'discount=100';
-            default:
-                return null;
-        }
-    },
-    Categories: () => {
-        let txt = '';
-        UseState()!.Categories.forEach((text, i) => {
-            txt = txt + text + '|';
-        });
-        return `cat=${txt}`;
-    },
-    'Sub Categories': (elem) => {
-        let txt = '';
-        UseState()!.Categories.forEach((text, i) => {
-            txt = txt + text + '|';
-        });
-        return `cat=${txt}`;
-    },
-    Level: (elem) => {
-        //
-    },
-};
+// export const useCreateApi = (state: initialState_type) => {
+//     const {
+//         apis: {
+//             start,
+//             featured,
+//             sortDir,
+//             defaultLength,
+//             discount50,
+//             discount100,
+//         },
+//     } = vars;
 
-export const createApi = (btn: t.rootBtn, elem: t.radios) => {
-    const {
-        apis: {
-            start,
-            featured,
-            sortDir,
-            defaultLength,
-            discount50,
-            discount100,
-        },
-    } = vars;
-    let apiString: string = `${start}&${featured}&${sortDir}&${defaultLength}&page=1${elem_to_api.Ratings}&${elem_to_api['Discount Level']}&${elem_to_api.Level}&${elem_to_api['Sub Categories']}`;
-};
+//     let apiString: string = `${start}&${featured}&${sortDir}&${defaultLength}`;
+
+//     if (state.Ratings.length > 0) {
+//         let tempString = state.Ratings.map((rate, i) => {
+//             return elem_to_api.Ratings(rate);
+//         });
+//         apiString = `${apiString}&${tempString}`;
+//     }
+//     if (state['Discount Level'].length > 0) {
+//         let tempString = state['Discount Level'].map((rate, i) => {
+//             return elem_to_api.Ratings(rate);
+//         });
+//         apiString = `${apiString}&${tempString}`;
+//     }
+//     if (state['Sub Categories'].length > 0) {
+//         let tempString = state['Sub Categories'].map((rate, i) => {
+//             return elem_to_api['Sub Categories'](rate);
+//         });
+//         apiString = `${apiString}&${tempString}`;
+//         console.log('Clicked', apiString, tempString);
+//     }
+//     if (state.Categories.length > 0) {
+//         let tempString = state.Categories.map((rate, i) => {
+//             return elem_to_api.Ratings(rate);
+//         });
+//         apiString = `${apiString}&${tempString}`;
+//     }
+//     if (state.Level.length > 0) {
+//         let tempString = state.Level.map((rate, i) => {
+//             return elem_to_api.Ratings(rate);
+//         });
+//         apiString = `${apiString}&${tempString}`;
+//     }
+
+//     return { apiString };
+// };

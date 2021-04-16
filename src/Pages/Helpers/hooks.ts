@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
-import * as t from '../types';
+import { UseState, UseDispatch, vars, t, f } from '../index';
 
 export const useStyles = makeStyles({
     root: {
@@ -29,57 +29,11 @@ export const useStyles = makeStyles({
     },
 });
 
-// const Main: React.FC<MainProps> = () => {
-//     const c = useStyles(); // c for class
-//     return (
-//         <Box className={`${c.fillScreen}`} style={{ boxSizing: 'border-box' }}>
-//             <div
-//                 className={`${c.root}
-//             ${c.fillParent}
-//             ${c.gridColumn}`}
-//             >
-//                 {/* Left side */}
-//                 <div style={{ border: '3px solid' }}>
-//                     {/* inner wraper */}
-//                     <div
-//                         style={{ border: '2px solid blue' }}
-//                         className={`${c.left_innerWraper}`}
-//                     >
-//                         {filterNames.map((name, i) => {
-//                             return (
-//                                 <Box
-//                                     key={i}
-//                                     style={{
-//                                         border: '2px solid red',
-//                                         padding: '1rem',
-//                                     }}
-//                                 >
-//                                     <Typography
-//                                         variant="h6"
-//                                         // style={{ color: '#06589c' }}
-//                                     >
-//                                         {name}
-//                                     </Typography>
-//                                 </Box>
-//                             );
-//                         })}
-//                     </div>
-//                 </div>
-//                 {/* Right Side */}
-//                 <div style={{ backgroundColor: 'rgb(216, 229, 232)' }}>
-//                     Right Panel
-//                 </div>
-//             </div>
-//         </Box>
-//     );
-// };
+// : React.FC<createApiiProps>
 
-// const enums_filterName: { [key in t.leftButtons]: t.filterNames } = {
-//     ratings: 'Ratings',
-//     discount: 'Discount Level',
-//     categories: 'Categories',
-//     subCategories: 'Sub Categories',
-//     topics: 'Topics',
-//     level: 'Level',
-//     language: 'Language',
+// export const createApi = () => {
+
+// const dispatch = UseDispatch()!;
+
+// let apiStringa: string = `${start}&${featured}&${sortDir}&${defaultLength}&page=1${elem_to_api.Ratings}&${elem_to_api['Discount Level']}&${elem_to_api.Level}&${elem_to_api['Sub Categories']}`;
 // };

@@ -22,6 +22,37 @@ export type toggleRadios = {
 
 export type discountLevels = '100%' | '>50%';
 
+export type card = {
+    Author: string;
+    // AuthorId: null
+    Category: string;
+    CouponCode: string;
+    CouponId: number;
+    CouponLink: string;
+    CourseId: number;
+    CreatedD: Date;
+    DiscountP: number;
+    Duration: number;
+    EndTime: Date;
+    Featured: true;
+    ImageUrl: string;
+    Language: string;
+    Level: string;
+    Link: string;
+    PriceDiscounted: number;
+    PriceOld: number;
+    Prio: number;
+    Rating: number;
+    Reviews: number;
+    Students: number;
+    Subcategory: string;
+    SubcategoryId: number;
+    Title: string;
+    Topic: string;
+    TopicId: number;
+    ValidatedD: Date;
+};
+
 export type categories =
     | 'All Categories'
     | 'Development'

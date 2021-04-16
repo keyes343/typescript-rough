@@ -7,6 +7,7 @@ import { UseState, UseDispatch, vars, t, f } from './index';
 
 // import CouponCard from './Main/CouponCard';
 import CouponLogic from './Main/CouponLogic';
+import { QueryObserverResult, RefetchOptions, useQuery } from 'react-query';
 
 type type_radio =
     | t.discountLevels
@@ -16,11 +17,14 @@ type type_radio =
     | t.duration
     | t.subCategories;
 
-export interface MainProps {}
+export interface MainProps {
+    // refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<t.card[] | undefined, unknown>>
+}
 
 const Main: React.FC<MainProps> = () => {
     const state = UseState()!;
     const dispatch = UseDispatch()!;
+    // const api = f.useCreateApi(state).apiString;
 
     const c = useStyles(); // c for class
     const [hoveredUpon, setHoveredUpon] = useState('');
@@ -43,6 +47,7 @@ const Main: React.FC<MainProps> = () => {
 
     return (
         <Box className={`${c.fillScreen}`} style={{ boxSizing: 'border-box' }}>
+            {state.apiString}
             <Grid xs={12} container className={`${c.root} ${c.fillParent}`}>
                 {/* Left side */}
                 <Grid
@@ -143,7 +148,7 @@ const Main: React.FC<MainProps> = () => {
                                                             key={`${i}+${j}`}
                                                             style={{
                                                                 border:
-                                                                    '2px solid red',
+                                                                    '2px solid blue',
                                                                 display: 'flex',
                                                                 flexDirection:
                                                                     'row',
@@ -168,6 +173,7 @@ const Main: React.FC<MainProps> = () => {
                                                             <Box>
                                                                 <Radio
                                                                     checked={f.exists_in_state_value(
+                                                                        state,
                                                                         mainOption,
                                                                         subOption
                                                                     )}
@@ -201,6 +207,7 @@ const Main: React.FC<MainProps> = () => {
                     item
                     xs={10}
                     style={{
+                        // border: '2px solid blue',
                         backgroundColor: 'rgb(216, 229, 232)',
                         padding: '2rem',
                     }}
